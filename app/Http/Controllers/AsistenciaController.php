@@ -67,9 +67,10 @@ class AsistenciaController extends Controller
     public function edit($id)
     {
         $asistencia = Asistencia::findOrFail($id);
-        $grupos = Grupo::all();
+        $estudiante = $asistencia->estudiante;
+        $grupo = $asistencia->grupo;
 
-        return view('asistencias.edit', compact('asistencia', 'grupos'));
+        return view('asistencias.edit', compact('asistencia', 'estudiante', 'grupo'));
     }
 
     /**
@@ -78,7 +79,7 @@ class AsistenciaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'grupo_id' => 'required|exists:grupo,id',
+            'grupo_id' => 'nullable|exists:grupo,id',
             'fecha' => 'nullable|date',
             'hora_entrada' => 'nullable|date_format:H:i',
         ]);

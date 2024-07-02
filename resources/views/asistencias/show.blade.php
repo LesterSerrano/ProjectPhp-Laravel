@@ -12,13 +12,7 @@
                         <p><strong>Grupo:</strong> {{ $asistencia->grupo->nombre }}</p>
                         <p><strong>Fecha:</strong> {{ $asistencia->fecha }}</p>
                         <p><strong>Hora de Entrada:</strong> {{ $asistencia->hora_entrada }}</p>
-                        <a href="{{ route('asistencias.edit', $asistencia->id) }}" class="btn btn-primary">Editar</a>
-
-                        <form action="{{ route('asistencias.destroy', $asistencia->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </form>
+                        <a href="{{ route('asistencias.index', $asistencia->id) }}" class="btn btn-secondary">Regresar</a>
                     </div>
                 </div>
             </div>

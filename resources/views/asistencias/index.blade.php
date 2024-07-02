@@ -32,7 +32,7 @@
                                         <td>
                                             @auth('docente')
                                             <a href="{{ route('asistencias.edit', $asistencia->id) }}" class="btn btn-primary">Editar</a>
-
+                                            <a href="{{ route('asistencias.show', $asistencia->id) }}" class="btn btn-info">Ver</a>
                                             <form action="{{ route('asistencias.destroy', $asistencia->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
