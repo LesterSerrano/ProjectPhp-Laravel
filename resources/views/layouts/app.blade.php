@@ -76,17 +76,17 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Estudiantes/grupo
                             </a>
+                            <a class="nav-link" href="{{ route('asistencias.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Asistencias
+                            </a>
                         </div>
                     @elseif (auth()->guard('estudiante')->check())
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Mantenimientos</div>
-                            <a class="nav-link" href="{{ route('estudiantes.index') }}">
+                            <a class="nav-link" href="{{ route('asistencias.index') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Estudiantes
-                            </a>
-                            <a class="nav-link" href="{{ route('estudiantes_grupos.index') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Estudiantes/grupo
+                                Asistencias
                             </a>
                         </div>
                     @endif

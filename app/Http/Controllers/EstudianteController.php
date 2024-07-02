@@ -139,7 +139,7 @@ class EstudianteController extends Controller
 
         if ($estudiante && Hash::check($request->pin, $estudiante->pin)) {
             Auth::guard('estudiante')->login($estudiante);
-            return redirect()->intended();
+            return redirect()->route('asistencias.create');
         }
 
         return redirect()->back()->withErrors([

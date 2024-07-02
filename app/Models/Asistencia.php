@@ -14,6 +14,8 @@ class Asistencia extends Model
     protected $fillable =[
         'estudiante_id',
         'grupo_id',
+        'fecha',
+        'hora_entrada',
     ];
 
     public function estudiante()
