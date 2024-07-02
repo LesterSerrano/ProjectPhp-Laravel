@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Estudiante;
 use App\Models\Grupo;
+use App\Models\EstudianteGrupo;
 use App\Models\Asistencia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AsistenciaController extends Controller
 {
@@ -23,9 +25,9 @@ class AsistenciaController extends Controller
      */
     public function create()
     {
-        $estudiantes = Estudiante::all();
-        $grupos = Grupo::all();
-        return view('asistencias.create', compact('estudiantes', 'grupos'));
+        $estudiante = Auth::guard('estudiante')->user();
+        $estudianteGrupo = EstudianteGrupo::where('estudiante_id', $estudiante->id)->firstOrFail();
+        return view('asistencias.create', compact('estudiante', 'estudianteGrupo'));
     }
 
     /**
@@ -34,13 +36,19 @@ class AsistenciaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'estudiante_id' => 'required|exists:estudiante,id',
             'grupo_id' => 'required|exists:grupo,id',
-            'fecha' => 'required|date',
-            'hora_entrada' => 'required|date_format:H:i',
         ]);
 
-        Asistencia::create($request->all());
+        $estudiante = Auth::guard('estudiante')->user();
+
+
+        Asistencia::create([
+            'estudiante_id' => $estudiante->id,
+            'grupo_id' => $request->input('grupo_id'),
+            'fecha' => now()->toDateString(),
+            'hora_entrada' => now()->toTimeString(),
+        ]);
+
         return redirect()->route('asistencias.index')->with('success', 'Asistencia registrada correctamente.');
     }
 
@@ -60,9 +68,8 @@ class AsistenciaController extends Controller
     {
         $asistencia = Asistencia::findOrFail($id);
         $grupos = Grupo::all();
-        $estudiantes = Estudiante::all();
 
-        return view('asistencias.edit', compact('asistencia', 'grupos', 'estudiantes'));
+        return view('asistencias.edit', compact('asistencia', 'grupos'));
     }
 
     /**
@@ -71,7 +78,6 @@ class AsistenciaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'estudiante_id' => 'required|exists:estudiante,id',
             'grupo_id' => 'required|exists:grupo,id',
             'fecha' => 'nullable|date',
             'hora_entrada' => 'nullable|date_format:H:i',
